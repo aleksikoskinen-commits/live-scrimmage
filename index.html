@@ -3,152 +3,119 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080909">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Scrimmage Pro">
-<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#090a0a">
 <title>Scrimmage Pro</title>
 <style>
-:root{--bg:#080909;--panel:#131515;--panel2:#191b1b;--line:#292b2b;--text:#f5f5f5;--muted:#929595;--g:#00bd66;--g2:#00a94d;--b:#536785;--r:#df0013;--p:#a40042;--o:#ed8500}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif}
-button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation}
-.app{max-width:1700px;margin:auto;padding:12px 16px 24px}
-.top{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding:2px 0 10px}
-.kicker{font-size:9px;letter-spacing:2px;color:#999;font-weight:900}
-h1{margin:3px 0 0;font-size:22px}
-.topActions{display:flex;gap:6px}
-.btn{border:1px solid var(--line);background:#151616;color:#ddd;border-radius:7px;padding:7px 10px;font-size:11px;font-weight:900}
-.danger{color:#f27676}
-.toolbar{display:flex;align-items:center;gap:8px;padding:9px 0;overflow:auto}
-.mode{display:flex;background:#141515;border:1px solid var(--line);border-radius:8px;padding:3px}
-.mode button{border:0;background:transparent;color:#888;border-radius:5px;padding:6px 10px;font-size:10px;font-weight:950}
-.mode button.active{background:#f4f4f4;color:#111}
-.toolbar label{font-size:9px;color:#777;font-weight:900;letter-spacing:1px}
-.toolbar select{background:#151616;color:#ddd;border:1px solid var(--line);border-radius:6px;padding:6px 8px;font-size:11px}
-.spacer{flex:1}
-.scrim{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.scrim.single{grid-template-columns:1fr}
-.team{min-width:0;background:linear-gradient(145deg,#131515,#0f1010);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.teamHead{display:flex;justify-content:space-between;align-items:center;background:#181a1a;border-bottom:1px solid var(--line);padding:8px 11px}
-.teamName{font-size:15px;font-weight:950;letter-spacing:.4px}
-.headBtns{display:flex;gap:5px}
-.iconBtn{border:0;background:transparent;color:#888;padding:5px;font-weight:900}
-.metrics{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;padding:9px 10px 7px}
-.metric{background:#181a1a;border:1px solid #222424;border-radius:7px;padding:7px 4px;text-align:center}
-.metric label{display:block;color:#7e8181;font-size:7px;letter-spacing:1px;font-weight:900}
-.metric strong{display:block;font-size:18px;margin-top:2px}
-.metric.score strong{font-size:23px}
-.sets{display:flex;gap:5px;overflow:auto;padding:2px 10px 7px}
-.set{border:1px solid var(--line);background:#171919;color:#999;border-radius:6px;padding:6px 9px;font-size:9px;font-weight:950;white-space:nowrap}
-.set.active{background:#f4f4f4;color:#111;border-color:#fff}
-.set.add{border-style:dashed}
-.calls{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;padding:0 10px 8px}
-.call{border:0;border-radius:8px;color:#fff;min-height:61px;font-size:22px;font-weight:950;box-shadow:inset 0 -2px #0002}
-.call small{display:block;font-size:7px;letter-spacing:.5px;opacity:.8;margin-top:3px}
-.c3{background:var(--g)}.c2{background:var(--g2)}.c1{background:var(--b)}.m2{background:var(--r)}.m3{background:var(--p)}.to{background:var(--o)}
-.history{border-top:1px solid var(--line);background:#111313}
-.historyHead{display:flex;justify-content:space-between;align-items:center;padding:7px 10px}
-.historyHead b{font-size:9px;letter-spacing:1px}
-.historyHead span{font-size:8px;color:#666}
-.undo{border:0;background:transparent;color:#aaa;font-size:9px;font-weight:900}
-.scroll{max-height:145px;overflow:auto}
-table{width:100%;border-collapse:collapse}
-th,td{padding:5px 7px;border-top:1px solid #1e2020;font-size:9px}
-th{font-size:7px;color:#666;letter-spacing:1px;text-align:left}
-td:nth-child(n+3),th:nth-child(n+3){text-align:right}
-.badge{display:inline-block;min-width:26px;text-align:center;padding:2px 4px;border-radius:4px;font-weight:950}
-.b3{background:#006c3e}.b2{background:#00652f}.b1{background:#354660}.bm2{background:#700008}.bm3{background:#650028}.bto{background:#864700}
-.good{color:#2bd786}.bad{color:#ff6270}.empty{text-align:center;color:#666;padding:20px}
-.insight{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:7px 10px 10px}
-.insightCard{background:#151717;border:1px solid #222424;border-radius:7px;padding:7px}
-.insightCard h3{font-size:8px;letter-spacing:1px;margin:0 0 5px;color:#777}
-.insightLine{display:flex;justify-content:space-between;font-size:9px;padding:2px 0}
-.bottom{display:flex;justify-content:space-between;color:#666;font-size:9px;padding-top:8px}
-.modal{position:fixed;inset:0;background:#000c;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}
-.modal.open{display:flex}.dialog{width:min(430px,100%);background:#171919;border:1px solid #303232;border-radius:12px;padding:16px}
-.dialog h3{margin:0 0 10px}.dialog input{width:100%;background:#0d0e0e;color:#fff;border:1px solid #303232;border-radius:7px;padding:10px;margin-bottom:9px}
-.dialog .row{display:flex;justify-content:flex-end;gap:6px}.dialog button{border:0;border-radius:7px;padding:9px 12px;font-weight:900}.save{background:#f4f4f4;color:#111}.cancel{background:#292b2b;color:#ddd}
-@media(max-width:900px){
- .app{padding:9px}.scrim{grid-template-columns:1fr}.team:nth-child(2){display:none}.scrim.single .team:nth-child(2){display:none}
- .metrics{grid-template-columns:repeat(3,1fr)}.calls{grid-template-columns:repeat(3,1fr)}.call{min-height:72px}
-}
-@media(min-width:901px){body{min-width:900px}}
+*{box-sizing:border-box}html,body{margin:0;background:#090a0a;color:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}button,select,input{font:inherit}button{cursor:pointer}
+.app{max-width:1600px;margin:auto;padding:14px}
+header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #292b2b;padding-bottom:12px}
+.kicker{font-size:10px;letter-spacing:2px;color:#888;font-weight:800}h1{font-size:24px;margin:3px 0}
+.toolbar{display:flex;align-items:center;gap:8px;padding:10px 0;flex-wrap:wrap}
+.mode{display:flex;border:1px solid #292b2b;border-radius:8px;padding:3px}.mode button{border:0;background:transparent;color:#888;padding:7px 11px;border-radius:6px;font-weight:800}.mode .active{background:#f5f5f5;color:#111}
+.btn,.set{border:1px solid #292b2b;background:#161818;color:#ddd;border-radius:7px;padding:7px 10px;font-weight:800}.danger{color:#f47777}.spacer{flex:1}
+.scrim{display:grid;grid-template-columns:1fr 1fr;gap:12px}.scrim.single{grid-template-columns:1fr}
+.team{min-width:0;background:#121414;border:1px solid #292b2b;border-radius:12px;overflow:hidden}
+.teamHead{display:flex;justify-content:space-between;align-items:center;background:#181a1a;border-bottom:1px solid #292b2b;padding:10px 12px}.teamName{font-size:17px;font-weight:900}.head{display:flex;gap:5px}.icon{border:0;background:transparent;color:#999;padding:5px;font-weight:900}
+.metrics{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;padding:9px}.metric{background:#181a1a;border:1px solid #242626;border-radius:7px;text-align:center;padding:7px 3px}.metric label{display:block;color:#777;font-size:8px;letter-spacing:1px;font-weight:800}.metric b{font-size:20px;display:block;margin-top:2px}
+.sets{display:flex;gap:6px;overflow:auto;padding:0 9px 9px}.set{white-space:nowrap;font-size:9px;padding:6px 9px}.set.active{background:#f5f5f5;color:#111;border-color:#fff}.add{border-style:dashed}
+.calls{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;padding:0 9px 9px}.call{border:0;border-radius:8px;color:#fff;min-height:68px;font-size:24px;font-weight:950}.call small{display:block;font-size:7px;letter-spacing:.5px;margin-top:3px;opacity:.8}.c3{background:#00bd66}.c2{background:#00a94d}.c1{background:#536785}.m2{background:#df0013}.m3{background:#a40042}.to{background:#ed8500}
+.history{border-top:1px solid #292b2b;background:#101212}.historyHead{display:flex;justify-content:space-between;padding:8px 10px}.historyHead b{font-size:10px;letter-spacing:1px}.historyHead span{font-size:8px;color:#777}.undo{border:0;background:transparent;color:#aaa;font-weight:800;font-size:9px}.scroll{max-height:180px;overflow:auto}table{width:100%;border-collapse:collapse}th,td{padding:6px 8px;border-top:1px solid #202222;font-size:9px}th{font-size:7px;color:#666;text-align:left}td:nth-child(n+3),th:nth-child(n+3){text-align:right}.badge{display:inline-block;min-width:27px;text-align:center;border-radius:4px;padding:3px 4px;font-weight:900}.b3{background:#006c3e}.b2{background:#00652f}.b1{background:#354660}.bm2{background:#700008}.bm3{background:#650028}.bto{background:#864700}.good{color:#2bd786}.bad{color:#ff6270}.empty{text-align:center;color:#666;padding:20px}
+.insights{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:8px}.insight{background:#161818;border:1px solid #222424;border-radius:7px;padding:7px}.insight h3{margin:0 0 5px;font-size:7px;letter-spacing:1px;color:#777}.line{display:flex;justify-content:space-between;font-size:9px;padding:2px 0}
+.modal{position:fixed;inset:0;background:#000c;display:none;align-items:center;justify-content:center;padding:20px;z-index:20}.modal.open{display:flex}.dialog{width:min(420px,100%);background:#171919;border:1px solid #333;border-radius:12px;padding:16px}.dialog h3{margin:0 0 10px}.dialog input{width:100%;background:#0d0e0e;color:#fff;border:1px solid #333;border-radius:7px;padding:10px;margin-bottom:10px}.dialog .row{display:flex;justify-content:flex-end;gap:7px}.dialog button{border:0;border-radius:7px;padding:9px 13px;font-weight:900}.save{background:#f5f5f5;color:#111}.cancel{background:#292b2b;color:#ddd}
+@media(max-width:850px){.scrim{grid-template-columns:1fr}.team:nth-child(2){display:none}.metrics{grid-template-columns:repeat(3,1fr)}.calls{grid-template-columns:repeat(3,1fr)}.call{min-height:78px}.spacer{display:none}}
 </style>
 </head>
 <body>
 <div class="app">
-<header class="top">
- <div><div class="kicker">LIVE SCRIMMAGE PRO</div><h1 id="sessionName">Practice</h1></div>
- <div class="topActions"><button class="btn" id="renameSession">✎ Nimi</button><button class="btn" id="csv">⇩ CSV</button><button class="btn danger" id="reset">↻ RESET</button></div>
-</header>
-<div class="toolbar">
- <div class="mode"><button id="one">1 JOUKKUE</button><button id="two" class="active">2 JOUKKUET</button></div>
- <label>ERÄ</label><select id="period"><option>1</option><option>2</option><option>3</option><option>4</option><option>OT</option></select>
- <label>LIVE</label><button class="btn" id="clock">12:00</button><div class="spacer"></div>
- <button class="btn" id="exportSummary">⇩ SUMMARY</button>
-</div>
+<header><div><div class="kicker">LIVE SCRIMMAGE PRO</div><h1 id="title">Practice</h1></div><div><button class="btn" id="rename">✎ Nimi</button> <button class="btn" id="csv">↓ CSV</button> <button class="btn danger" id="reset">↻ RESET</button></div></header>
+<div class="toolbar"><div class="mode"><button id="one">1 JOUKKUE</button><button id="two" class="active">2 JOUKKUET</button></div><b style="font-size:9px;color:#777">ERÄ</b><select id="period"><option>1</option><option>2</option><option>3</option><option>4</option><option>OT</option></select><button class="btn" id="clock">12:00</button><div class="spacer"></div><button class="btn" id="summary">↓ SUMMARY</button></div>
 <main id="scrim" class="scrim"></main>
-<div class="bottom"><span>Automaattinen tallennus selaimeen</span><span>3 = +3 · 2 = +2 · 1 = FT · M = 2PT miss · T = TO</span></div>
 </div>
-<div class="modal" id="modal"><div class="dialog"><h3 id="modalTitle">Muokkaa</h3><input id="input"><div class="row"><button class="cancel" id="cancel">Peruuta</button><button class="save" id="save">Tallenna</button></div></div></div>
+<div id="modal" class="modal"><div class="dialog"><h3 id="mtitle">Muokkaa</h3><input id="input"><div class="row"><button class="cancel" id="cancel">Peruuta</button><button class="save" id="save">Tallenna</button></div></div></div>
 <script>
-const KEY="scrimmageProV3";
-const TYPES={3pm:{label:"3PT Make",short:"+3",pts:3,cls:"b3"},2pm:{label:"2PT Make",short:"+2",pts:2,cls:"b2"},1:{label:"FT Make",short:"+1",pts:1,cls:"b1"},2miss:{label:"2PT Miss",short:"MISS",pts:null,cls:"bm2"},3miss:{label:"3PT Miss",short:"MISS",pts:null,cls:"bm3"},to:{label:"Turnover",short:"TO",pts:null,cls:"bto"}};
-const playNames=["HORNS 2","IVERSON","RAM","PHILLY","SLICE"];
-const plays=()=>playNames.map(name=>({name,items:[]}));
-const defaults={session:"Practice",mode:"two",period:"1",clock:720,teams:[{name:"BLUE",plays:plays()},{name:"WHITE",plays:plays()}],active:[0,0]};
-let state=JSON.parse(localStorage.getItem(KEY)||"null")||defaults;
-if(!state.teams||state.teams.length!==2)state=defaults;
-let editFn=null;
-function save(){localStorage.setItem(KEY,JSON.stringify(state))}
-function allItems(t){return t.plays.flatMap(p=>p.items)}
-function stats(t){let a=allItems(t),pts=a.reduce((n,x)=>n+(x.pts||0),0),shots=a.filter(x=>["3pm","2pm","3miss","2miss"].includes(x.type)),makes=shots.filter(x=>x.pts!==null).length;return{a,pts,poss:a.length,ppp:a.length?pts/a.length:0,fg:shots.length?100*makes/shots.length:0}}
-function pstats(p){let a=p.items,pts=a.reduce((n,x)=>n+(x.pts||0),0),shots=a.filter(x=>["3pm","2pm","3miss","2miss"].includes(x.type)),makes=shots.filter(x=>x.pts!==null).length;return{pts,poss:a.length,ppp:a.length?pts/a.length:0,fg:shots.length?100*makes/shots.length:0}}
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function modal(title,value,fn){editFn=fn;document.getElementById("modalTitle").textContent=title;let i=document.getElementById("input");i.value=value;document.getElementById("modal").classList.add("open");setTimeout(()=>{i.focus();i.select()},20)}
-function add(ti,type){let p=state.teams[ti].plays[state.active[ti]];p.items.push({type,pts:TYPES[type].pts,period:state.period,time:state.clock,ts:Date.now()});save();render()}
-function teamCard(ti){
- let t=state.teams[ti],s=stats(t),pi=state.active[ti],p=t.plays[pi],ps=pstats(p);
- let card=document.createElement("section");card.className="team";
- card.innerHTML=`<div class="teamHead"><div><span class="teamName">${esc(t.name)}</span></div><div class="headBtns"><button class="iconBtn" data-name>✎</button><button class="iconBtn" data-undo>↩</button><button class="iconBtn" data-clear>RESET</button></div></div>
- <div class="metrics">
- <div class="metric score"><label>PTS</label><strong>${s.pts}</strong></div><div class="metric"><label>POSS</label><strong>${s.poss}</strong></div><div class="metric"><label>PPP</label><strong>${s.ppp.toFixed(2)}</strong></div><div class="metric"><label>FG%</label><strong>${s.fg.toFixed(1)}%</strong></div><div class="metric"><label>3PM</label><strong>${s.a.filter(x=>x.type==="3pm").length}</strong></div><div class="metric"><label>TO</label><strong>${s.a.filter(x=>x.type==="to").length}</strong></div></div>
- <div class="sets" data-sets></div>
- <div class="calls">
- <button class="call c3" data-t="3pm">+3<small>3PT MAKE</small></button><button class="call c2" data-t="2pm">+2<small>2PT MAKE</small></button><button class="call c1" data-t="1">+1<small>FT MAKE</small></button><button class="call m2" data-t="2miss">MISS<small>2PT MISS</small></button><button class="call m3" data-t="3miss">MISS<small>3PT MISS</small></button><button class="call to" data-t="to">TO<small>TURNOVER</small></button></div>
- <div class="history"><div class="historyHead"><div><b>${esc(t.name)} · ${esc(p.name)}</b><span> ${ps.poss} poss · ${ps.ppp.toFixed(2)} PPP · ${ps.fg.toFixed(0)}% FG</span></div><button class="undo" data-undo>↩ UNDO</button></div>
- <div class="scroll"><table><thead><tr><th>#</th><th>RESULT</th><th>PTS</th><th>TOTAL</th><th>PPP</th></tr></thead><tbody data-rows></tbody></table></div></div>
- <div class="insight"><div class="insightCard"><h3>SET TEHOKKUUS</h3><div class="insightLine"><span>PPP</span><b>${ps.ppp.toFixed(2)}</b></div><div class="insightLine"><span>FG%</span><b>${ps.fg.toFixed(0)}%</b></div></div><div class="insightCard"><h3>KAUDEN PARHAAT SETIT</h3><div data-best></div></div></div>`;
- let sb=card.querySelector("[data-sets]");
- t.plays.forEach((x,i)=>{let b=document.createElement("button");b.className="set "+(i===pi?"active":"");b.textContent=x.name;b.onclick=()=>{state.active[ti]=i;save();render()};b.ondblclick=()=>modal("Setin nimi",x.name,v=>x.name=v);sb.appendChild(b)});
- let addb=document.createElement("button");addb.className="set add";addb.textContent="+";addb.onclick=()=>{t.plays.push({name:"NEW PLAY",items:[]});state.active[ti]=t.plays.length-1;save();render();modal("Setin nimi","NEW PLAY",v=>t.plays[state.active[ti]].name=v)};sb.appendChild(addb);
- card.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>add(ti,b.dataset.t));
- card.querySelectorAll("[data-undo]").forEach(b=>b.onclick=()=>{if(p.items.length){p.items.pop();save();render()}});
- card.querySelector("[data-clear]").onclick=()=>{if(confirm("Tyhjennetäänkö tämän joukkueen kaikki kirjaukset?")){t.plays.forEach(x=>x.items=[]);save();render()}};
- card.querySelector("[data-name]").onclick=()=>modal("Joukkueen nimi",t.name,v=>t.name=v);
- let rows=card.querySelector("[data-rows]");if(!p.items.length)rows.innerHTML='<tr><td colspan="5" class="empty">Ei vielä kirjauksia.</td></tr>';else{let total=0;p.items.forEach((x,i)=>{total+=x.pts||0;let avg=total/(i+1),tr=document.createElement("tr");tr.innerHTML=`<td>${i+1}</td><td><span class="badge ${TYPES[x.type].cls}">${TYPES[x.type].short}</span> ${TYPES[x.type].label}</td><td class="${x.pts!==null?'good':'bad'}">${x.pts!==null?'+'+x.pts:'—'}</td><td>${total}</td><td>${avg.toFixed(2)}</td>`;rows.prepend(tr)})}
- let best=[...t.plays].map(x=>({name:x.name,...pstats(x)})).filter(x=>x.poss).sort((a,b)=>b.ppp-a.ppp).slice(0,3);card.querySelector("[data-best]").innerHTML=best.length?best.map(x=>`<div class="insightLine"><span>${esc(x.name)}</span><b>${x.ppp.toFixed(2)}</b></div>`).join(""):"<span style='color:#666;font-size:8px'>Ei dataa</span>";
- return card;
+(function(){
+"use strict";
+var KEY="scrimmage_pro_clean_v1";
+var TYPES={
+ "3pm":{label:"3PT Make",short:"+3",pts:3,cls:"b3"},
+ "2pm":{label:"2PT Make",short:"+2",pts:2,cls:"b2"},
+ "1":{label:"FT Make",short:"+1",pts:1,cls:"b1"},
+ "2miss":{label:"2PT Miss",short:"MISS",pts:null,cls:"bm2"},
+ "3miss":{label:"3PT Miss",short:"MISS",pts:null,cls:"bm3"},
+ "to":{label:"Turnover",short:"TO",pts:null,cls:"bto"}
+};
+function newPlays(){return ["HORNS 2","IVERSON","RAM","PHILLY","SLICE"].map(function(n){return {name:n,items:[]};});}
+var state;
+try{state=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){state=null;}
+if(!state||!state.teams||state.teams.length!==2){
+ state={title:"Practice",mode:"two",period:"1",teams:[{name:"BLUE",plays:newPlays()},{name:"WHITE",plays:newPlays()}],active:[0,0],clock:720};
 }
-function render(){document.getElementById("sessionName").textContent=state.session;document.getElementById("period").value=state.period;document.getElementById("one").classList.toggle("active",state.mode==="one");document.getElementById("two").classList.toggle("active",state.mode==="two");let s=document.getElementById("scrim");s.innerHTML="";s.className="scrim "+(state.mode==="one"?"single":"");s.appendChild(teamCard(0));if(state.mode==="two")s.appendChild(teamCard(1));updateClock()}
-let timer=null;
-function fmt(sec){let m=Math.floor(sec/60),s=sec%60;return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")}
-function updateClock(){document.getElementById("clock").textContent=fmt(state.clock)}
-document.getElementById("one").onclick=()=>{state.mode="one";save();render()};
-document.getElementById("two").onclick=()=>{state.mode="two";save();render()};
-document.getElementById("period").onchange=e=>{state.period=e.target.value;save();render()};
-document.getElementById("renameSession").onclick=()=>modal("Harjoituksen nimi",state.session,v=>state.session=v);
-document.getElementById("cancel").onclick=()=>document.getElementById("modal").classList.remove("open");
-document.getElementById("save").onclick=()=>{let v=document.getElementById("input").value.trim();if(v&&editFn)editFn(v);save();document.getElementById("modal").classList.remove("open");render()};
-document.getElementById("reset").onclick=()=>{if(confirm("Tyhjennetäänkö koko harjoitus?")){state.teams.forEach(t=>t.plays.forEach(p=>p.items=[]));state.clock=720;save();render()}};
-document.getElementById("clock").onclick=()=>{if(timer){clearInterval(timer);timer=null;document.getElementById("clock").textContent=fmt(state.clock)+" ▶"}else{timer=setInterval(()=>{if(state.clock>0){state.clock--;updateClock()}else{clearInterval(timer);timer=null}},1000)}};
-function download(name,content,type){let b=new Blob([content],{type}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=name;a.click();URL.revokeObjectURL(a.href)}
-document.getElementById("csv").onclick=()=>{let r=[["Team","Period","Play","Possession","Result","Points","Clock"]];state.teams.forEach(t=>t.plays.forEach(p=>p.items.forEach((x,i)=>r.push([t.name,x.period,p.name,i+1,TYPES[x.type].label,x.pts??"",fmt(x.time||0)]))));download("scrimmage-data.csv",r.map(a=>a.map(v=>`"${String(v).replaceAll('"','""')}"`).join(",")).join("\n"),"text/csv;charset=utf-8")};
-document.getElementById("exportSummary").onclick=()=>{let lines=[state.session+" — SCRIMMAGE SUMMARY",""];state.teams.forEach(t=>{let s=stats(t);lines.push(t.name+": "+s.pts+" PTS | "+s.poss+" POSS | "+s.ppp.toFixed(2)+" PPP | "+s.fg.toFixed(1)+" FG%");t.plays.filter(p=>p.items.length).forEach(p=>{let x=pstats(p);lines.push("  "+p.name+": "+x.poss+" poss | "+x.ppp.toFixed(2)+" PPP | "+x.fg.toFixed(0)+" FG%")});lines.push("")});download("scrimmage-summary.txt",lines.join("\n"),"text/plain;charset=utf-8")};
-document.addEventListener("keydown",e=>{if(e.target.matches("input,select"))return;let k=e.key.toLowerCase(),map={"3":"3pm","2":"2pm","1":"1","m":"2miss","t":"to","q":"3miss"};if(map[k])add(0,map[k])});
-render();
+if(!state.active)state.active=[0,0];
+if(typeof state.clock!=="number")state.clock=720;
+var editFn=null,timer=null;
+
+function save(){localStorage.setItem(KEY,JSON.stringify(state));}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function stats(team){
+ var a=[];
+ team.plays.forEach(function(p){a=a.concat(p.items);});
+ var pts=0,shots=0,makes=0;
+ a.forEach(function(x){pts+=x.pts||0;if(x.type==="3pm"||x.type==="2pm"||x.type==="3miss"||x.type==="2miss"){shots++;if(x.pts!==null)makes++;}});
+ return {a:a,pts:pts,poss:a.length,ppp:a.length?pts/a.length:0,fg:shots?100*makes/shots:0};
+}
+function playStats(p){
+ var a=p.items,pts=0,shots=0,makes=0;
+ a.forEach(function(x){pts+=x.pts||0;if(x.type==="3pm"||x.type==="2pm"||x.type==="3miss"||x.type==="2miss"){shots++;if(x.pts!==null)makes++;}});
+ return {poss:a.length,pts:pts,ppp:a.length?pts/a.length:0,fg:shots?100*makes/shots:0};
+}
+function openModal(title,value,fn){editFn=fn;document.getElementById("mtitle").textContent=title;document.getElementById("input").value=value;document.getElementById("modal").className="modal open";setTimeout(function(){document.getElementById("input").focus();document.getElementById("input").select();},20);}
+function addEvent(ti,type){var p=state.teams[ti].plays[state.active[ti]];p.items.push({type:type,pts:TYPES[type].pts,period:state.period,time:state.clock});save();render();}
+function makeTeam(ti){
+ var t=state.teams[ti],s=stats(t),pi=state.active[ti],p=t.plays[pi],ps=playStats(p);
+ var el=document.createElement("section");el.className="team";
+ el.innerHTML='<div class="teamHead"><span class="teamName">'+esc(t.name)+'</span><div class="head"><button class="icon" data-name>✎</button><button class="icon" data-undo>↩</button><button class="icon" data-clear>RESET</button></div></div>'+
+ '<div class="metrics"><div class="metric"><label>PTS</label><b>'+s.pts+'</b></div><div class="metric"><label>POSS</label><b>'+s.poss+'</b></div><div class="metric"><label>PPP</label><b>'+s.ppp.toFixed(2)+'</b></div><div class="metric"><label>FG%</label><b>'+s.fg.toFixed(1)+'%</b></div><div class="metric"><label>3PM</label><b>'+s.a.filter(function(x){return x.type==="3pm";}).length+'</b></div><div class="metric"><label>TO</label><b>'+s.a.filter(function(x){return x.type==="to";}).length+'</b></div></div>'+
+ '<div class="sets" data-sets></div>'+
+ '<div class="calls"><button class="call c3" data-t="3pm">+3<small>3PT MAKE</small></button><button class="call c2" data-t="2pm">+2<small>2PT MAKE</small></button><button class="call c1" data-t="1">+1<small>FT MAKE</small></button><button class="call m2" data-t="2miss">MISS<small>2PT MISS</small></button><button class="call m3" data-t="3miss">MISS<small>3PT MISS</small></button><button class="call to" data-t="to">TO<small>TURNOVER</small></button></div>'+
+ '<div class="history"><div class="historyHead"><div><b>'+esc(t.name)+' · '+esc(p.name)+'</b><span> '+ps.poss+' poss · '+ps.ppp.toFixed(2)+' PPP</span></div><button class="undo" data-undo>↩ UNDO</button></div><div class="scroll"><table><thead><tr><th>#</th><th>RESULT</th><th>PTS</th><th>TOTAL</th><th>PPP</th></tr></thead><tbody data-rows></tbody></table></div></div>'+
+ '<div class="insights"><div class="insight"><h3>SET</h3><div class="line"><span>PPP</span><b>'+ps.ppp.toFixed(2)+'</b></div><div class="line"><span>FG%</span><b>'+ps.fg.toFixed(0)+'%</b></div></div><div class="insight"><h3>BEST SETS</h3><div data-best></div></div></div>';
+ var sets=el.querySelector("[data-sets]");
+ t.plays.forEach(function(x,i){var b=document.createElement("button");b.className="set"+(i===pi?" active":"");b.textContent=x.name;b.onclick=function(){state.active[ti]=i;save();render();};b.ondblclick=function(){openModal("Setin nimi",x.name,function(v){x.name=v;});};sets.appendChild(b);});
+ var ab=document.createElement("button");ab.className="set add";ab.textContent="+";ab.onclick=function(){t.plays.push({name:"NEW PLAY",items:[]});state.active[ti]=t.plays.length-1;save();render();openModal("Setin nimi","NEW PLAY",function(v){t.plays[state.active[ti]].name=v;save();render();});};sets.appendChild(ab);
+ el.querySelectorAll("[data-t]").forEach(function(b){b.onclick=function(){addEvent(ti,b.getAttribute("data-t"));};});
+ el.querySelectorAll("[data-undo]").forEach(function(b){b.onclick=function(){if(p.items.length){p.items.pop();save();render();}};});
+ el.querySelector("[data-clear]").onclick=function(){if(confirm("Tyhjennetäänkö tämän joukkueen kaikki kirjaukset?")){t.plays.forEach(function(x){x.items=[];});save();render();}};
+ el.querySelector("[data-name]").onclick=function(){openModal("Joukkueen nimi",t.name,function(v){t.name=v;});};
+ var rows=el.querySelector("[data-rows]");
+ if(!p.items.length)rows.innerHTML='<tr><td colspan="5" class="empty">Ei vielä kirjauksia.</td></tr>';
+ else{var total=0;p.items.forEach(function(x,i){total+=x.pts||0;var avg=total/(i+1),tr=document.createElement("tr");tr.innerHTML='<td>'+(i+1)+'</td><td><span class="badge '+TYPES[x.type].cls+'">'+TYPES[x.type].short+'</span> '+TYPES[x.type].label+'</td><td class="'+(x.pts!==null?"good":"bad")+'">'+(x.pts!==null?"+"+x.pts:"—")+'</td><td>'+total+'</td><td>'+avg.toFixed(2)+'</td>';rows.prepend(tr);});}
+ var best=t.plays.map(function(x){var z=playStats(x);return {name:x.name,ppp:z.ppp,poss:z.poss,fg:z.fg};}).filter(function(x){return x.poss>0;}).sort(function(a,b){return b.ppp-a.ppp;}).slice(0,3);
+ el.querySelector("[data-best]").innerHTML=best.length?best.map(function(x){return '<div class="line"><span>'+esc(x.name)+'</span><b>'+x.ppp.toFixed(2)+'</b></div>';}).join(""):'<span style="color:#666;font-size:8px">Ei dataa</span>';
+ return el;
+}
+function render(){
+ document.getElementById("title").textContent=state.title;
+ document.getElementById("one").className=state.mode==="one"?"active":"";
+ document.getElementById("two").className=state.mode==="two"?"active":"";
+ document.getElementById("period").value=state.period;
+ var root=document.getElementById("scrim");root.innerHTML="";root.className="scrim"+(state.mode==="one"?" single":"");root.appendChild(makeTeam(0));if(state.mode==="two")root.appendChild(makeTeam(1));
+ document.getElementById("clock").textContent=fmt(state.clock);
+}
+function fmt(n){var m=Math.floor(n/60),s=n%60;return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");}
+document.getElementById("one").onclick=function(){state.mode="one";save();render();};
+document.getElementById("two").onclick=function(){state.mode="two";save();render();};
+document.getElementById("period").onchange=function(e){state.period=e.target.value;save();};
+document.getElementById("rename").onclick=function(){openModal("Harjoituksen nimi",state.title,function(v){state.title=v;});};
+document.getElementById("cancel").onclick=function(){document.getElementById("modal").className="modal";};
+document.getElementById("save").onclick=function(){var v=document.getElementById("input").value.trim();if(v&&editFn)editFn(v);save();document.getElementById("modal").className="modal";render();};
+document.getElementById("reset").onclick=function(){if(confirm("Tyhjennetäänkö koko harjoitus?")){state.teams.forEach(function(t){t.plays.forEach(function(p){p.items=[];});});state.clock=720;save();render();}};
+document.getElementById("clock").onclick=function(){if(timer){clearInterval(timer);timer=null;}else{timer=setInterval(function(){if(state.clock>0){state.clock--;document.getElementById("clock").textContent=fmt(state.clock);}else{clearInterval(timer);timer=null;}},1000);}};
+function download(name,text,type){var a=document.createElement("a"),b=new Blob([text],{type:type});a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href);},500);}
+document.getElementById("csv").onclick=function(){var rows=[["Team","Period","Play","Possession","Result","Points"]];state.teams.forEach(function(t){t.plays.forEach(function(p){p.items.forEach(function(x,i){rows.push([t.name,x.period,p.name,i+1,TYPES[x.type].label,x.pts===null?"":x.pts]);});});});download("scrimmage.csv",rows.map(function(r){return r.map(function(v){return '"'+String(v).replace(/"/g,'""')+'"';}).join(",");}).join("\n"),"text/csv");};
+document.getElementById("summary").onclick=function(){var out=[state.title,""];state.teams.forEach(function(t){var s=stats(t);out.push(t.name+" | "+s.pts+" PTS | "+s.poss+" POSS | "+s.ppp.toFixed(2)+" PPP | "+s.fg.toFixed(1)+" FG%");t.plays.forEach(function(p){var z=playStats(p);if(z.poss)out.push("  "+p.name+" | "+z.poss+" poss | "+z.ppp.toFixed(2)+" PPP | "+z.fg.toFixed(0)+" FG%");});out.push("");});download("scrimmage-summary.txt",out.join("\n"),"text/plain");};
+document.addEventListener("keydown",function(e){if(e.target.tagName==="INPUT"||e.target.tagName==="SELECT")return;var map={"3":"3pm","2":"2pm","1":"1","m":"2miss","q":"3miss","t":"to"};if(map[e.key.toLowerCase()])addEvent(0,map[e.key.toLowerCase()]);});
+save();render();
+})();
 </script>
 </body>
 </html>
