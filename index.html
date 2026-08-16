@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080909">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Scrimmage Pro">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Scrimmage Pro</title>
+<style>
+:root{--bg:#080909;--panel:#131515;--panel2:#191b1b;--line:#292b2b;--text:#f5f5f5;--muted:#929595;--g:#00bd66;--g2:#00a94d;--b:#536785;--r:#df0013;--p:#a40042;--o:#ed8500}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation}
+.app{max-width:1700px;margin:auto;padding:12px 16px 24px}
+.top{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding:2px 0 10px}
+.kicker{font-size:9px;letter-spacing:2px;color:#999;font-weight:900}
+h1{margin:3px 0 0;font-size:22px}
+.topActions{display:flex;gap:6px}
+.btn{border:1px solid var(--line);background:#151616;color:#ddd;border-radius:7px;padding:7px 10px;font-size:11px;font-weight:900}
+.danger{color:#f27676}
+.toolbar{display:flex;align-items:center;gap:8px;padding:9px 0;overflow:auto}
+.mode{display:flex;background:#141515;border:1px solid var(--line);border-radius:8px;padding:3px}
+.mode button{border:0;background:transparent;color:#888;border-radius:5px;padding:6px 10px;font-size:10px;font-weight:950}
+.mode button.active{background:#f4f4f4;color:#111}
+.toolbar label{font-size:9px;color:#777;font-weight:900;letter-spacing:1px}
+.toolbar select{background:#151616;color:#ddd;border:1px solid var(--line);border-radius:6px;padding:6px 8px;font-size:11px}
+.spacer{flex:1}
+.scrim{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.scrim.single{grid-template-columns:1fr}
+.team{min-width:0;background:linear-gradient(145deg,#131515,#0f1010);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.teamHead{display:flex;justify-content:space-between;align-items:center;background:#181a1a;border-bottom:1px solid var(--line);padding:8px 11px}
+.teamName{font-size:15px;font-weight:950;letter-spacing:.4px}
+.headBtns{display:flex;gap:5px}
+.iconBtn{border:0;background:transparent;color:#888;padding:5px;font-weight:900}
+.metrics{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;padding:9px 10px 7px}
+.metric{background:#181a1a;border:1px solid #222424;border-radius:7px;padding:7px 4px;text-align:center}
+.metric label{display:block;color:#7e8181;font-size:7px;letter-spacing:1px;font-weight:900}
+.metric strong{display:block;font-size:18px;margin-top:2px}
+.metric.score strong{font-size:23px}
+.sets{display:flex;gap:5px;overflow:auto;padding:2px 10px 7px}
+.set{border:1px solid var(--line);background:#171919;color:#999;border-radius:6px;padding:6px 9px;font-size:9px;font-weight:950;white-space:nowrap}
+.set.active{background:#f4f4f4;color:#111;border-color:#fff}
+.set.add{border-style:dashed}
+.calls{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;padding:0 10px 8px}
+.call{border:0;border-radius:8px;color:#fff;min-height:61px;font-size:22px;font-weight:950;box-shadow:inset 0 -2px #0002}
+.call small{display:block;font-size:7px;letter-spacing:.5px;opacity:.8;margin-top:3px}
+.c3{background:var(--g)}.c2{background:var(--g2)}.c1{background:var(--b)}.m2{background:var(--r)}.m3{background:var(--p)}.to{background:var(--o)}
+.history{border-top:1px solid var(--line);background:#111313}
+.historyHead{display:flex;justify-content:space-between;align-items:center;padding:7px 10px}
+.historyHead b{font-size:9px;letter-spacing:1px}
+.historyHead span{font-size:8px;color:#666}
+.undo{border:0;background:transparent;color:#aaa;font-size:9px;font-weight:900}
+.scroll{max-height:145px;overflow:auto}
+table{width:100%;border-collapse:collapse}
+th,td{padding:5px 7px;border-top:1px solid #1e2020;font-size:9px}
+th{font-size:7px;color:#666;letter-spacing:1px;text-align:left}
+td:nth-child(n+3),th:nth-child(n+3){text-align:right}
+.badge{display:inline-block;min-width:26px;text-align:center;padding:2px 4px;border-radius:4px;font-weight:950}
+.b3{background:#006c3e}.b2{background:#00652f}.b1{background:#354660}.bm2{background:#700008}.bm3{background:#650028}.bto{background:#864700}
+.good{color:#2bd786}.bad{color:#ff6270}.empty{text-align:center;color:#666;padding:20px}
+.insight{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:7px 10px 10px}
+.insightCard{background:#151717;border:1px solid #222424;border-radius:7px;padding:7px}
+.insightCard h3{font-size:8px;letter-spacing:1px;margin:0 0 5px;color:#777}
+.insightLine{display:flex;justify-content:space-between;font-size:9px;padding:2px 0}
+.bottom{display:flex;justify-content:space-between;color:#666;font-size:9px;padding-top:8px}
+.modal{position:fixed;inset:0;background:#000c;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}
+.modal.open{display:flex}.dialog{width:min(430px,100%);background:#171919;border:1px solid #303232;border-radius:12px;padding:16px}
+.dialog h3{margin:0 0 10px}.dialog input{width:100%;background:#0d0e0e;color:#fff;border:1px solid #303232;border-radius:7px;padding:10px;margin-bottom:9px}
+.dialog .row{display:flex;justify-content:flex-end;gap:6px}.dialog button{border:0;border-radius:7px;padding:9px 12px;font-weight:900}.save{background:#f4f4f4;color:#111}.cancel{background:#292b2b;color:#ddd}
+@media(max-width:900px){
+ .app{padding:9px}.scrim{grid-template-columns:1fr}.team:nth-child(2){display:none}.scrim.single .team:nth-child(2){display:none}
+ .metrics{grid-template-columns:repeat(3,1fr)}.calls{grid-template-columns:repeat(3,1fr)}.call{min-height:72px}
+}
+@media(min-width:901px){body{min-width:900px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+ <div><div class="kicker">LIVE SCRIMMAGE PRO</div><h1 id="sessionName">Practice</h1></div>
+ <div class="topActions"><button class="btn" id="renameSession">✎ Nimi</button><button class="btn" id="csv">⇩ CSV</button><button class="btn danger" id="reset">↻ RESET</button></div>
+</header>
+<div class="toolbar">
+ <div class="mode"><button id="one">1 JOUKKUE</button><button id="two" class="active">2 JOUKKUET</button></div>
+ <label>ERÄ</label><select id="period"><option>1</option><option>2</option><option>3</option><option>4</option><option>OT</option></select>
+ <label>LIVE</label><button class="btn" id="clock">12:00</button><div class="spacer"></div>
+ <button class="btn" id="exportSummary">⇩ SUMMARY</button>
+</div>
+<main id="scrim" class="scrim"></main>
+<div class="bottom"><span>Automaattinen tallennus selaimeen</span><span>3 = +3 · 2 = +2 · 1 = FT · M = 2PT miss · T = TO</span></div>
+</div>
+<div class="modal" id="modal"><div class="dialog"><h3 id="modalTitle">Muokkaa</h3><input id="input"><div class="row"><button class="cancel" id="cancel">Peruuta</button><button class="save" id="save">Tallenna</button></div></div></div>
+<script>
+const KEY="scrimmageProV3";
+const TYPES={3pm:{label:"3PT Make",short:"+3",pts:3,cls:"b3"},2pm:{label:"2PT Make",short:"+2",pts:2,cls:"b2"},1:{label:"FT Make",short:"+1",pts:1,cls:"b1"},2miss:{label:"2PT Miss",short:"MISS",pts:null,cls:"bm2"},3miss:{label:"3PT Miss",short:"MISS",pts:null,cls:"bm3"},to:{label:"Turnover",short:"TO",pts:null,cls:"bto"}};
+const playNames=["HORNS 2","IVERSON","RAM","PHILLY","SLICE"];
+const plays=()=>playNames.map(name=>({name,items:[]}));
+const defaults={session:"Practice",mode:"two",period:"1",clock:720,teams:[{name:"BLUE",plays:plays()},{name:"WHITE",plays:plays()}],active:[0,0]};
+let state=JSON.parse(localStorage.getItem(KEY)||"null")||defaults;
+if(!state.teams||state.teams.length!==2)state=defaults;
+let editFn=null;
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+function allItems(t){return t.plays.flatMap(p=>p.items)}
+function stats(t){let a=allItems(t),pts=a.reduce((n,x)=>n+(x.pts||0),0),shots=a.filter(x=>["3pm","2pm","3miss","2miss"].includes(x.type)),makes=shots.filter(x=>x.pts!==null).length;return{a,pts,poss:a.length,ppp:a.length?pts/a.length:0,fg:shots.length?100*makes/shots.length:0}}
+function pstats(p){let a=p.items,pts=a.reduce((n,x)=>n+(x.pts||0),0),shots=a.filter(x=>["3pm","2pm","3miss","2miss"].includes(x.type)),makes=shots.filter(x=>x.pts!==null).length;return{pts,poss:a.length,ppp:a.length?pts/a.length:0,fg:shots.length?100*makes/shots.length:0}}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function modal(title,value,fn){editFn=fn;document.getElementById("modalTitle").textContent=title;let i=document.getElementById("input");i.value=value;document.getElementById("modal").classList.add("open");setTimeout(()=>{i.focus();i.select()},20)}
+function add(ti,type){let p=state.teams[ti].plays[state.active[ti]];p.items.push({type,pts:TYPES[type].pts,period:state.period,time:state.clock,ts:Date.now()});save();render()}
+function teamCard(ti){
+ let t=state.teams[ti],s=stats(t),pi=state.active[ti],p=t.plays[pi],ps=pstats(p);
+ let card=document.createElement("section");card.className="team";
+ card.innerHTML=`<div class="teamHead"><div><span class="teamName">${esc(t.name)}</span></div><div class="headBtns"><button class="iconBtn" data-name>✎</button><button class="iconBtn" data-undo>↩</button><button class="iconBtn" data-clear>RESET</button></div></div>
+ <div class="metrics">
+ <div class="metric score"><label>PTS</label><strong>${s.pts}</strong></div><div class="metric"><label>POSS</label><strong>${s.poss}</strong></div><div class="metric"><label>PPP</label><strong>${s.ppp.toFixed(2)}</strong></div><div class="metric"><label>FG%</label><strong>${s.fg.toFixed(1)}%</strong></div><div class="metric"><label>3PM</label><strong>${s.a.filter(x=>x.type==="3pm").length}</strong></div><div class="metric"><label>TO</label><strong>${s.a.filter(x=>x.type==="to").length}</strong></div></div>
+ <div class="sets" data-sets></div>
+ <div class="calls">
+ <button class="call c3" data-t="3pm">+3<small>3PT MAKE</small></button><button class="call c2" data-t="2pm">+2<small>2PT MAKE</small></button><button class="call c1" data-t="1">+1<small>FT MAKE</small></button><button class="call m2" data-t="2miss">MISS<small>2PT MISS</small></button><button class="call m3" data-t="3miss">MISS<small>3PT MISS</small></button><button class="call to" data-t="to">TO<small>TURNOVER</small></button></div>
+ <div class="history"><div class="historyHead"><div><b>${esc(t.name)} · ${esc(p.name)}</b><span> ${ps.poss} poss · ${ps.ppp.toFixed(2)} PPP · ${ps.fg.toFixed(0)}% FG</span></div><button class="undo" data-undo>↩ UNDO</button></div>
+ <div class="scroll"><table><thead><tr><th>#</th><th>RESULT</th><th>PTS</th><th>TOTAL</th><th>PPP</th></tr></thead><tbody data-rows></tbody></table></div></div>
+ <div class="insight"><div class="insightCard"><h3>SET TEHOKKUUS</h3><div class="insightLine"><span>PPP</span><b>${ps.ppp.toFixed(2)}</b></div><div class="insightLine"><span>FG%</span><b>${ps.fg.toFixed(0)}%</b></div></div><div class="insightCard"><h3>KAUDEN PARHAAT SETIT</h3><div data-best></div></div></div>`;
+ let sb=card.querySelector("[data-sets]");
+ t.plays.forEach((x,i)=>{let b=document.createElement("button");b.className="set "+(i===pi?"active":"");b.textContent=x.name;b.onclick=()=>{state.active[ti]=i;save();render()};b.ondblclick=()=>modal("Setin nimi",x.name,v=>x.name=v);sb.appendChild(b)});
+ let addb=document.createElement("button");addb.className="set add";addb.textContent="+";addb.onclick=()=>{t.plays.push({name:"NEW PLAY",items:[]});state.active[ti]=t.plays.length-1;save();render();modal("Setin nimi","NEW PLAY",v=>t.plays[state.active[ti]].name=v)};sb.appendChild(addb);
+ card.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>add(ti,b.dataset.t));
+ card.querySelectorAll("[data-undo]").forEach(b=>b.onclick=()=>{if(p.items.length){p.items.pop();save();render()}});
+ card.querySelector("[data-clear]").onclick=()=>{if(confirm("Tyhjennetäänkö tämän joukkueen kaikki kirjaukset?")){t.plays.forEach(x=>x.items=[]);save();render()}};
+ card.querySelector("[data-name]").onclick=()=>modal("Joukkueen nimi",t.name,v=>t.name=v);
+ let rows=card.querySelector("[data-rows]");if(!p.items.length)rows.innerHTML='<tr><td colspan="5" class="empty">Ei vielä kirjauksia.</td></tr>';else{let total=0;p.items.forEach((x,i)=>{total+=x.pts||0;let avg=total/(i+1),tr=document.createElement("tr");tr.innerHTML=`<td>${i+1}</td><td><span class="badge ${TYPES[x.type].cls}">${TYPES[x.type].short}</span> ${TYPES[x.type].label}</td><td class="${x.pts!==null?'good':'bad'}">${x.pts!==null?'+'+x.pts:'—'}</td><td>${total}</td><td>${avg.toFixed(2)}</td>`;rows.prepend(tr)})}
+ let best=[...t.plays].map(x=>({name:x.name,...pstats(x)})).filter(x=>x.poss).sort((a,b)=>b.ppp-a.ppp).slice(0,3);card.querySelector("[data-best]").innerHTML=best.length?best.map(x=>`<div class="insightLine"><span>${esc(x.name)}</span><b>${x.ppp.toFixed(2)}</b></div>`).join(""):"<span style='color:#666;font-size:8px'>Ei dataa</span>";
+ return card;
+}
+function render(){document.getElementById("sessionName").textContent=state.session;document.getElementById("period").value=state.period;document.getElementById("one").classList.toggle("active",state.mode==="one");document.getElementById("two").classList.toggle("active",state.mode==="two");let s=document.getElementById("scrim");s.innerHTML="";s.className="scrim "+(state.mode==="one"?"single":"");s.appendChild(teamCard(0));if(state.mode==="two")s.appendChild(teamCard(1));updateClock()}
+let timer=null;
+function fmt(sec){let m=Math.floor(sec/60),s=sec%60;return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")}
+function updateClock(){document.getElementById("clock").textContent=fmt(state.clock)}
+document.getElementById("one").onclick=()=>{state.mode="one";save();render()};
+document.getElementById("two").onclick=()=>{state.mode="two";save();render()};
+document.getElementById("period").onchange=e=>{state.period=e.target.value;save();render()};
+document.getElementById("renameSession").onclick=()=>modal("Harjoituksen nimi",state.session,v=>state.session=v);
+document.getElementById("cancel").onclick=()=>document.getElementById("modal").classList.remove("open");
+document.getElementById("save").onclick=()=>{let v=document.getElementById("input").value.trim();if(v&&editFn)editFn(v);save();document.getElementById("modal").classList.remove("open");render()};
+document.getElementById("reset").onclick=()=>{if(confirm("Tyhjennetäänkö koko harjoitus?")){state.teams.forEach(t=>t.plays.forEach(p=>p.items=[]));state.clock=720;save();render()}};
+document.getElementById("clock").onclick=()=>{if(timer){clearInterval(timer);timer=null;document.getElementById("clock").textContent=fmt(state.clock)+" ▶"}else{timer=setInterval(()=>{if(state.clock>0){state.clock--;updateClock()}else{clearInterval(timer);timer=null}},1000)}};
+function download(name,content,type){let b=new Blob([content],{type}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=name;a.click();URL.revokeObjectURL(a.href)}
+document.getElementById("csv").onclick=()=>{let r=[["Team","Period","Play","Possession","Result","Points","Clock"]];state.teams.forEach(t=>t.plays.forEach(p=>p.items.forEach((x,i)=>r.push([t.name,x.period,p.name,i+1,TYPES[x.type].label,x.pts??"",fmt(x.time||0)]))));download("scrimmage-data.csv",r.map(a=>a.map(v=>`"${String(v).replaceAll('"','""')}"`).join(",")).join("\n"),"text/csv;charset=utf-8")};
+document.getElementById("exportSummary").onclick=()=>{let lines=[state.session+" — SCRIMMAGE SUMMARY",""];state.teams.forEach(t=>{let s=stats(t);lines.push(t.name+": "+s.pts+" PTS | "+s.poss+" POSS | "+s.ppp.toFixed(2)+" PPP | "+s.fg.toFixed(1)+" FG%");t.plays.filter(p=>p.items.length).forEach(p=>{let x=pstats(p);lines.push("  "+p.name+": "+x.poss+" poss | "+x.ppp.toFixed(2)+" PPP | "+x.fg.toFixed(0)+" FG%")});lines.push("")});download("scrimmage-summary.txt",lines.join("\n"),"text/plain;charset=utf-8")};
+document.addEventListener("keydown",e=>{if(e.target.matches("input,select"))return;let k=e.key.toLowerCase(),map={"3":"3pm","2":"2pm","1":"1","m":"2miss","t":"to","q":"3miss"};if(map[k])add(0,map[k])});
+render();
+</script>
+</body>
+</html>
